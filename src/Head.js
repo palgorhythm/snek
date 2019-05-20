@@ -5,11 +5,14 @@ class Head {
   constructor($el) {
     this.node = $('<div id="head"></div>');
     this.currentDirection = 'right';
-    this.SPEED = 100;
     this.stepSize = 50;
     $el.append(this.node); // where we add the head to
     this.node.css({ top: 0, left: 0 });
-    setTimeout(this.move.bind(this), this.SPEED);
+    // setTimeout(this.move.bind(this), this.SPEED);
+  }
+
+  getPosition(){
+    return { top: this.node.css.top, left: this.node.css.left};
   }
 
   // same as Head.prototype.move = function() {...}
@@ -41,7 +44,7 @@ class Head {
     }
 
     this.node.css(position);
-    setTimeout(this.move.bind(this), this.SPEED); 
+    // setTimeout(this.move.bind(this), this.SPEED); 
     // why do we need to bind to this?
   }
 

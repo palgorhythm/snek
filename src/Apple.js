@@ -7,4 +7,8 @@ class Apple {
     this.node.css({ top: 0, left: 0 });
   }
 
+  getPosition(){
+    return { top: this.node.css.top, left: this.node.css.left};
+  }
+
 }
