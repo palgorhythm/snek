@@ -7,8 +7,11 @@ class Board {
   }
 
   updateGameState(){
-    if (this.head.getPosition() === this.apple.getPosition()){
+    const [headX,headY] = this.head.getPosition();
+    const [appleX, appleY] = this.apple.getPosition();
+    if ( headX === appleX && appleY === headY){
       this.eatApple();
+      console.log('ya');
     }
     this.head.move();
     setTimeout(this.updateGameState.bind(this), this.gameSpeed);

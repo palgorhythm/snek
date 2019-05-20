@@ -11,8 +11,9 @@ class Head {
     // setTimeout(this.move.bind(this), this.SPEED);
   }
 
-  getPosition(){
-    return { top: this.node.css.top, left: this.node.css.left};
+  getPosition() {
+    const {top, left} = this.node.position();
+    return [top, left];
   }
 
   // same as Head.prototype.move = function() {...}
