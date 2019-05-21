@@ -112,6 +112,21 @@ class Board {
     this.apple.respawn(randLoc);
   }
 
+  increaseSpeed() {
+    if (this.gameState !== GameState.INGAME) return;
+    settings.GAME_SPEED = Math.max(25, settings.GAME_SPEED - 25);
+    console.log('speed', settings.GAME_SPEED);
+    this.pause();
+    this.resume();
+  }
+  decreaseSpeed() {
+    if (this.gameState !== GameState.INGAME) return;
+    settings.GAME_SPEED = Math.min(1000, settings.GAME_SPEED + 25); 
+    console.log('speed', settings.GAME_SPEED);
+    this.pause();
+    this.resume();
+  }
+
   checkKeyInput(e) {
     // console.log(this.head);
     switch (e.keyCode) {
@@ -150,6 +165,12 @@ class Board {
           default:
             break;
         }
+        break;
+      case 77: // m
+        this.increaseSpeed();
+        break;
+      case 78: // n
+        this.decreaseSpeed();
         break;
     }
   }
