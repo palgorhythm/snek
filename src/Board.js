@@ -114,18 +114,37 @@ class Board {
     this.apple.respawn(randLoc);
   }
 
+  increaseSpeed() {
+    if (this.gameState !== GameState.INGAME) return;
+    settings.GAME_SPEED = Math.max(25, settings.GAME_SPEED - 25);
+    console.log('speed', settings.GAME_SPEED);
+    this.pause();
+    this.resume();
+  }
+  decreaseSpeed() {
+    if (this.gameState !== GameState.INGAME) return;
+    settings.GAME_SPEED = Math.min(1000, settings.GAME_SPEED + 25); 
+    console.log('speed', settings.GAME_SPEED);
+    this.pause();
+    this.resume();
+  }
+
   checkKeyInput(e) {
     switch (e.keyCode) {
       case 39:
+        if (this.head.currentDirection === 'left') return;
         this.head.currentDirection = 'right';
         break;
       case 37:
+          if (this.head.currentDirection === 'right') return;
         this.head.currentDirection = 'left';
         break;
       case 38:
+          if (this.head.currentDirection === 'down') return;
         this.head.currentDirection = 'up';
         break;
       case 40:
+          if (this.head.currentDirection === 'up') return;
         this.head.currentDirection = 'down';
         break;
       case 13:
@@ -151,6 +170,12 @@ class Board {
           default:
             break;
         }
+        break;
+      case 77: // m
+        this.increaseSpeed();
+        break;
+      case 78: // n
+        this.decreaseSpeed();
         break;
     }
   }
