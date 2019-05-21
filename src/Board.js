@@ -6,7 +6,7 @@ class Board {
     this.apple = new Apple();
     $('#board').css({ height: `${settings.BOARD_SIZE}px`,
       width: `${settings.BOARD_SIZE}px`,
-      border: "1px black solid",
+      border: "1px solid white",
       position: "relative"})
 
     // build the board of falses for unoccupied spots and 

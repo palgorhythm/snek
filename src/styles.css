@@ -9,6 +9,10 @@
   box-shadow: 10px;
 }
 
+html, body{
+  background: rgb(255, 197, 174);
+}
+
 #head{
   background-color: greenyellow;
 }

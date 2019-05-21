@@ -14,6 +14,7 @@ class SnakeBlock {
     $('#board').append(this.node); // where we add the head to
     this.node.css(pos);
     this.node.addClass('snakeblock');
+    this.node.css({height: settings.BLOCK_SIZE, width: settings.BLOCK_SIZE});
   }
 
   getPosition() {
