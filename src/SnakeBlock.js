@@ -57,8 +57,6 @@ class SnakeBlock {
     }
 
     this.node.css(position);
-    // setTimeout(this.move.bind(this), this.SPEED); 
-    // why do we need to bind to this?
   }
 
 }

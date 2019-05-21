@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Google+Sans:100,300,400,500,700,900,100i,300i,400i,500i,700i,900i);
+
 .snakeblock {
   background: black;
   background-color: #007BFF;
@@ -7,8 +9,32 @@
   box-shadow: 10px;
 }
 
-html, body{
+.gameBoard{
+  border: 10px solid white;
+  position: relative;
+  margin: auto;
+  border-radius: 10px;
+  background-color: greenyellow;
   background: rgb(255, 197, 174);
+  box-shadow: 5px 5px 5px 5px #007BFF;
+}
+
+#title{
+  font-family: 'Google Sans';
+  font-weight: 800;
+  margin: auto auto;
+  color: rgb(55, 165, 55);
+  padding: 10px 40px;
+  margin: 10px;
+  font-size: 64px;
+  background: rgba(255, 197, 174, 0.3);
+  border-radius: 20px;
+  display: inline-block;
+}
+
+html, body{
+  background: radial-gradient(#8dffc2,#a88dff);
+  text-align: center;
 }
 
 #head{
