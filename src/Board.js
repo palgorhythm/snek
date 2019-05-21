@@ -27,7 +27,10 @@ class Board {
   }
 
   updateGameState(){
-    // save the tail position.
+    // save the tail position, bc if we're eating an apple in this frame,
+    // we need to know where the tail was before we apply move() so we can
+    // add a new one in the correct position and take it into account when spawning
+    // a new apple.
     const tail = this.snake.blocks[this.snake.blocks.length - 1];
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
@@ -54,15 +57,15 @@ class Board {
   }
 
   eatApple(tailPos, tailDir){
+    console.log(tailPos);
     this.snake.addBlock(tailPos, tailDir);
-    console.log(this.snake.blocks);
+    // console.log(this.snake.blocks);
     // this.apple.respawn();
   }
 
   checkKeyInput(e) {
-    console.log(this.head);
+    // console.log(this.head);
     if (e.keyCode === 37) {
-      console.log('pressed left');
       this.head.currentDirection = 'left';
     }
     switch (e.keyCode) {
