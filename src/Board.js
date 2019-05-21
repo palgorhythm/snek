@@ -22,7 +22,7 @@ class Board {
     // set up the game loop to run by running a setTimeout that is also
     // called at the end of updateGameState. bind to this bc the E. context
     // of setTimeout is outside of the scope of the Board's this.
-    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+    this.resume();
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
@@ -47,8 +47,9 @@ class Board {
     this.head.move();
     const headPos = this.head.getPosition();
     this.occupiedSquares[`${tailPos.top}|${tailPos.left}`] = false;
-    if (this.occupiedSquares[`${headPos.top}|${headPos.left}`])
-      console.log('collision with self')
+    if (this.occupiedSquares[`${headPos.top}|${headPos.left}`]) {
+      this.triggerDeath();
+    }
     this.occupiedSquares[`${headPos.top}|${headPos.left}`] = this.head;
 
     // if we're on top of the apple, we need to USE our cached tail pos
@@ -58,7 +59,20 @@ class Board {
       this.eatApple(tailPos, tailDir);
     } 
     // then, we place the new tail.
-    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+    // setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+  }
+
+  triggerDeath() {
+    console.log('you Died :(')
+    this.pause();
+  }
+
+  pause() {
+    clearInterval(this.gameLoop);
+  }
+
+  resume() {
+    this.gameLoop = setInterval(this.updateGameState.bind(this), settings.GAME_SPEED);
   }
 
   eatApple(tailPos, tailDir){
