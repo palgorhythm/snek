@@ -11,7 +11,6 @@ class SnakeBlock {
   constructor(pos = { top: 0, left: 0 }, dir = 'right') {
     this.node = $('<div></div>');
     this.currentDirection = dir;
-    this.stepSize = 50;
     $('#board').append(this.node); // where we add the head to
     this.node.css(pos);
     this.node.addClass('snakeblock');
@@ -34,25 +33,25 @@ class SnakeBlock {
     let position = this.node.position();
     switch (direction) {
       case 'right':
-        position.left += this.stepSize;
+        position.left += settings.BLOCK_SIZE;
         break;
       case 'left':
-        position.left -= this.stepSize;
+        position.left -= settings.BLOCK_SIZE;
         break;
       case 'up':
-        position.top -= this.stepSize;
+        position.top -= settings.BLOCK_SIZE;
         break;
       case 'down':
-        position.top += this.stepSize;
+        position.top += settings.BLOCK_SIZE;
         break;
     }
-    if(position.left > 650){
+    if(position.left > settings.BOARD_SIZE - settings.BLOCK_SIZE){
       position.left = 0;
     } else if(position.left < 0){
-      position.left = 650;
+      position.left = settings.BOARD_SIZE - settings.BLOCK_SIZE;
     } else if(position.top < 0) {
-      position.top = 650;
-    } else if(position.top > 650) {
+      position.top = settings.BOARD_SIZE - settings.BLOCK_SIZE;
+    } else if(position.top > settings.BOARD_SIZE - settings.BLOCK_SIZE) {
       position.top = 0;
     }
 

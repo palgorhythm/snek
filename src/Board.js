@@ -4,8 +4,18 @@ class Board {
     this.head.node.attr('id','head');
     this.snake = new Body(this.head);
     this.apple = new Apple($('#board'));
-    this.gameSpeed = 200;
-    setTimeout(this.updateGameState.bind(this), this.gameSpeed);
+    $('#board').css({ height: `${settings.BOARD_SIZE}px`,
+      width: `${settings.BOARD_SIZE}px`,
+      border: "1px black solid",
+      position: "relative"})
+    this.occupiedSquares = {}; // reference to snakeblock object
+    for(let i = 0; i < settings.BOARD_SIZE; i += settings.BLOCK_SIZE) {
+      for(let j = 0; j < settings.BOARD_SIZE; j += settings.BLOCK_SIZE) {
+        this.occupiedSquares[`${i}|${j}`] = false; 
+      }
+    }
+    // console.log(this.occupiedSquares);
+    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
@@ -15,7 +25,7 @@ class Board {
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
 
-    // move 
+    // move   
     for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
       const curBlock = this.snake.blocks[i];
       const nextBlock = this.snake.blocks[i - 1];
@@ -31,7 +41,7 @@ class Board {
       this.eatApple(tailPos, tailDir);
     } 
     // then, we place the new tail.
-    setTimeout(this.updateGameState.bind(this), this.gameSpeed);
+    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
   }
 
   eatApple(tailPos, tailDir){

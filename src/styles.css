@@ -11,12 +11,6 @@
   background-color: red;
 }
 
-#board {
-  height: 700px;
-  width: 700px;
-  border: 1px black solid;
-  position: relative;
-}
 
 #apple {
   height: 50px;
