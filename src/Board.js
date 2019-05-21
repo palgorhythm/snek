@@ -1,8 +1,9 @@
 class Board {
   constructor(){
-    $('#board').addClass('gameBoard');
-    $('#board').hide();
-    $('#board').css({ height: `${settings.BOARD_SIZE}px`,
+    this.boardElem = $('#board');
+    this.boardElem.addClass('gameBoard');
+    this.boardElem.hide();
+    this.boardElem.css({ height: `${settings.BOARD_SIZE}px`,
       width: `${settings.BOARD_SIZE}px`})
     $('body').on('keydown', this.checkKeyInput.bind(this));
     this.setGameState(GameState.MENU);
@@ -60,14 +61,14 @@ class Board {
   }
 
   goToMenu() {
-    $('#board').hide();
+    this.boardElem.hide();
     this.setGameState(GameState.MENU);
   }
 
   start() {
     this.resetBoard();
     this.resume();
-    $('#board').show();
+    this.boardElem.show();
   }
 
   setGameState(GameState) {
@@ -81,6 +82,7 @@ class Board {
   }
 
   resetBoard() {
+    this.boardElem.empty();
     this.head = new SnakeBlock();
     this.head.node.attr('id','head');
     this.snake = new Body(this.head);
