@@ -66,7 +66,11 @@ class Board {
     this.snake.addBlock(tailPos, tailDir);
     // console.log(this.snake.blocks);
     // create a random location that none of the snake blocks are at.
-    let randLoc = {top: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random()), left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())};
+    let randLoc = this.getRandomPos();
+    while (this.occupiedSquares[`${randLoc.top}|${randLoc.left}`]) {
+      console.log('needed a reset in apple spawn')
+      randLoc = this.getRandomPos();
+    }
     this.apple.respawn(randLoc);
   }
 
@@ -89,6 +93,11 @@ class Board {
         this.head.currentDirection = 'down';
         break;
     }
+  }
+
+  getRandomPos() {
+    return {top: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random()),
+      left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())}
   }
 
   distance(topx,topy,leftx,lefty){
