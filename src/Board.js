@@ -1,28 +1,15 @@
 class Board {
   constructor(){
-    this.head = new SnakeBlock();
-    this.head.node.attr('id','head');
-    this.snake = new Body(this.head);
-    this.apple = new Apple();
+    $('#board').addClass('gameBoard');
+    $('#board').hide();
     $('#board').css({ height: `${settings.BOARD_SIZE}px`,
       width: `${settings.BOARD_SIZE}px`})
-    $('#board').addClass('gameBoard');
-
-    // build the board of falses for unoccupied spots and 
-    // objs for each thing that occupies a spot
-    this.occupiedSquares = {}; 
-    for(let i = 0; i < settings.BOARD_SIZE; i += settings.BLOCK_SIZE) {
-      for(let j = 0; j < settings.BOARD_SIZE; j += settings.BLOCK_SIZE) {
-        this.occupiedSquares[`${i}|${j}`] = false; 
-      }
-    }
-    this.occupiedSquares[`0|0`] = this.head;
+    $('body').on('keydown', this.checkKeyInput.bind(this));
+    this.setGameState(GameState.MENU);
     
     // set up the game loop to run by running a setTimeout that is also
     // called at the end of updateGameState. bind to this bc the E. context
     // of setTimeout is outside of the scope of the Board's this.
-    this.gameState = GameState.MENU;
-    $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
   updateGameState(){
@@ -64,28 +51,51 @@ class Board {
   triggerDeath() {
     console.log('you Died :(')
     this.pause();
-    this.gameState = GameState.DEATH_SCREEN;
+    this.setGameState(GameState.DEATH_SCREEN);
   }
 
   pause() {
     clearInterval(this.gameLoop);
-    this.gameState = GameState.PAUSE;
+    this.setGameState(GameState.PAUSE);
   }
 
   goToMenu() {
-    console.log('in menu');
-    this.gameState = GameState.MENU;
+    $('#board').hide();
+    this.setGameState(GameState.MENU);
   }
 
   start() {
+    this.resetBoard();
     this.resume();
-    this.gameState = GameState.INGAME;
+    $('#board').show();
+  }
+
+  setGameState(GameState) {
+    this.gameState = GameState;
+    console.log(GameState);
   }
 
   resume() {
     this.gameLoop = setInterval(this.updateGameState.bind(this), settings.GAME_SPEED);
-    this.gameState = GameState.INGAME;
+    this.setGameState(GameState.INGAME);
   }
+
+  resetBoard() {
+    this.head = new SnakeBlock();
+    this.head.node.attr('id','head');
+    this.snake = new Body(this.head);
+    this.apple = new Apple();
+
+    // build the board of falses for unoccupied spots and 
+    // objs for each thing that occupies a spot
+    this.occupiedSquares = {}; 
+    for(let i = 0; i < settings.BOARD_SIZE; i += settings.BLOCK_SIZE) {
+      for(let j = 0; j < settings.BOARD_SIZE; j += settings.BLOCK_SIZE) {
+        this.occupiedSquares[`${i}|${j}`] = false; 
+      }
+    }
+    this.occupiedSquares[`0|0`] = this.head;
+  };
 
   eatApple(tailPos, tailDir){
     console.log(tailPos);
