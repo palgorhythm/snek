@@ -1,10 +1,10 @@
 class Apple {
 
-  constructor($el) {
+  constructor(pos = {top: 200, left: 200}) {
     this.node = $('<img id="apple"></img>');
     this.node.attr('src', 'src/assets/apple.jpg');
-    $el.append(this.node);
-    this.node.css({ top: 0, left: 100 });
+    $('#board').append(this.node);
+    this.node.css({ top: pos.top, left: pos.left });
   }
 
   getPosition() {
