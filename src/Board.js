@@ -34,7 +34,6 @@ class Board {
     const tail = this.snake.blocks[this.snake.blocks.length - 1];
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
-    this.occupiedSquares[`${tailPos.top}|${tailPos.top}`] = false;
 
     // move   
     for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
@@ -42,10 +41,15 @@ class Board {
       const nextBlock = this.snake.blocks[i - 1];
       curBlock.move();
       curBlock.setDir(nextBlock.getDir());
+      const curPos = curBlock.getPosition();
+      this.occupiedSquares[`${curPos.top}|${curPos.left}`] = curBlock;
     }
     this.head.move();
     const headPos = this.head.getPosition();
-    this.occupiedSquares[`${headPos.top}|${headPos.top}`] = this.head;
+    this.occupiedSquares[`${tailPos.top}|${tailPos.left}`] = false;
+    if (this.occupiedSquares[`${headPos.top}|${headPos.left}`])
+      console.log('collision with self')
+    this.occupiedSquares[`${headPos.top}|${headPos.left}`] = this.head;
 
     // if we're on top of the apple, we need to USE our cached tail pos
     const applePos = this.apple.getPosition();
