@@ -1,5 +1,8 @@
 class Apple {
-
+  /**
+   * Spawns an apple in the board
+   * @param {{top, left}}} pos 
+   */
   constructor(pos = {top: 200, left: 200}) {
     this.node = $('<img id="apple"></img>');
     const picList = ['apple','baby','dog','pizza','seal']
