@@ -7,7 +7,7 @@ class Body {
     this.blocks = [head];
   }
 
-  addBlock(pos, dir){
-    this.blocks.push(new SnakeBlock(pos, dir));
+  addBlock(pos, dir, color){
+    this.blocks.push(new SnakeBlock(pos, dir, color));
   }
 }

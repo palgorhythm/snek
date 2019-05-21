@@ -2,11 +2,16 @@
 
 .snakeblock {
   background: black;
-  background-color: #007BFF;
+  /* background-color: #007BFF; */
   position: absolute;
   z-index: 1;
   border-radius: 50%;
   box-shadow: 10px;
+}
+
+#will{
+  height: 50px;
+  width: 50px;
 }
 
 .gameBoard{
@@ -15,7 +20,7 @@
   margin: auto;
   border-radius: 10px;
   background-color: greenyellow;
-  background: rgb(255, 197, 174);
+  background: rgba(255, 197, 174, 0.7);
   box-shadow: 5px 5px 5px 5px #007BFF;
 }
 
@@ -38,12 +43,20 @@ html, body{
 }
 
 #head{
-  background-color: greenyellow;
+  background-color: rgb(231, 149, 16);
 }
 
 
 #apple {
   height: 50px;
   width: 50px;
+  position: absolute;
+}
+
+#score{
+  font-family: 'Google Sans';
+  font-weight: 800;
+  font-size: 40px;
+  margin: 40px 40px;
   position: absolute;
 }
