@@ -24,6 +24,10 @@ class SnakeBlock {
     return this.currentDirection;
   }
 
+  setDir(dir){
+    this.currentDirection = dir;
+  }
+
   // same as Head.prototype.move = function() {...}
   move() {
     let direction = this.currentDirection;

@@ -4,7 +4,7 @@ class Board {
     this.head.node.attr('id','head');
     this.snake = new Body(this.head);
     this.apple = new Apple($('#board'));
-    this.gameSpeed = 100;
+    this.gameSpeed = 200;
     setTimeout(this.updateGameState.bind(this), this.gameSpeed);
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
@@ -15,9 +15,14 @@ class Board {
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
 
-    // move
-    this.snake.blocks.forEach(block => {block.move()});
-
+    // move 
+    for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
+      const curBlock = this.snake.blocks[i];
+      const nextBlock = this.snake.blocks[i - 1];
+      curBlock.move();
+      curBlock.setDir(nextBlock.getDir());
+    }
+    this.head.move();
 
     // if we're on top of the apple, we need to USE our cached tail pos
     const headPos = this.head.getPosition();
