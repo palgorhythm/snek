@@ -5,12 +5,27 @@ class Apple {
    */
   constructor(pos = {top: 200, left: 200}) {
     this.node = $('<img id="apple"></img>');
-    this.node.attr('src', 'src/assets/apple.jpg');
+    this.setPosition(pos);
+    this.setImg();
     $('#board').append(this.node);
-    this.node.css({ top: pos.top, left: pos.left });
   }
 
   getPosition() {
     return this.node.position();
+  }
+
+  setPosition(pos = {top: 200, left: 200}) {
+    this.node.css({ top: pos.top, left: pos.left });
+  }
+
+  setImg(){
+    const picList = ['apple','baby','dog','pizza','seal']
+    const randIndex = Math.floor((picList.length-1)*Math.random());
+    this.node.attr('src', `src/assets/${picList[randIndex]}.png`);
+  }
+
+  respawn(pos = {top: 200, left: 200}){
+    this.setImg();
+    this.setPosition(pos);
   }
 }
