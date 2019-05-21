@@ -8,14 +8,20 @@ class Board {
       width: `${settings.BOARD_SIZE}px`,
       border: "1px black solid",
       position: "relative"})
-    this.occupiedSquares = {}; // reference to snakeblock object
+
+    // build the board of falses for unoccupied spots and 
+    // objs for each thing that occupies a spot
+    this.occupiedSquares = {}; 
     for(let i = 0; i < settings.BOARD_SIZE; i += settings.BLOCK_SIZE) {
       for(let j = 0; j < settings.BOARD_SIZE; j += settings.BLOCK_SIZE) {
         this.occupiedSquares[`${i}|${j}`] = false; 
       }
     }
     this.occupiedSquares[`0|0`] = this.head;
-    // console.log(this.occupiedSquares);
+    
+    // set up the game loop to run by running a setTimeout that is also
+    // called at the end of updateGameState. bind to this bc the E. context
+    // of setTimeout is outside of the scope of the Board's this.
     setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
