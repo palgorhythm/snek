@@ -21,7 +21,7 @@ class Board {
     // set up the game loop to run by running a setTimeout that is also
     // called at the end of updateGameState. bind to this bc the E. context
     // of setTimeout is outside of the scope of the Board's this.
-    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+    this.gameState = GameState.MENU;
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
@@ -46,8 +46,9 @@ class Board {
     this.head.move();
     const headPos = this.head.getPosition();
     this.occupiedSquares[`${tailPos.top}|${tailPos.left}`] = false;
-    if (this.occupiedSquares[`${headPos.top}|${headPos.left}`])
-      console.log('collision with self')
+    if (this.occupiedSquares[`${headPos.top}|${headPos.left}`]) {
+      this.triggerDeath();
+    }
     this.occupiedSquares[`${headPos.top}|${headPos.left}`] = this.head;
 
     // if we're on top of the apple, we need to USE our cached tail pos
@@ -57,7 +58,33 @@ class Board {
       this.eatApple(tailPos, tailDir);
     } 
     // then, we place the new tail.
-    setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+    // setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
+  }
+
+  triggerDeath() {
+    console.log('you Died :(')
+    this.pause();
+    this.gameState = GameState.DEATH_SCREEN;
+  }
+
+  pause() {
+    clearInterval(this.gameLoop);
+    this.gameState = GameState.PAUSE;
+  }
+
+  goToMenu() {
+    console.log('in menu');
+    this.gameState = GameState.MENU;
+  }
+
+  start() {
+    this.resume();
+    this.gameState = GameState.INGAME;
+  }
+
+  resume() {
+    this.gameLoop = setInterval(this.updateGameState.bind(this), settings.GAME_SPEED);
+    this.gameState = GameState.INGAME;
   }
 
   eatApple(tailPos, tailDir){
@@ -65,15 +92,16 @@ class Board {
     this.snake.addBlock(tailPos, tailDir);
     // console.log(this.snake.blocks);
     // create a random location that none of the snake blocks are at.
-    let randLoc = {top: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random()), left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())};
+    let randLoc = this.getRandomPos();
+    while (this.occupiedSquares[`${randLoc.top}|${randLoc.left}`]) {
+      console.log('needed a reset in apple spawn')
+      randLoc = this.getRandomPos();
+    }
     this.apple.respawn(randLoc);
   }
 
   checkKeyInput(e) {
     // console.log(this.head);
-    if (e.keyCode === 37) {
-      this.head.currentDirection = 'left';
-    }
     switch (e.keyCode) {
       case 39:
         this.head.currentDirection = 'right';
@@ -87,7 +115,29 @@ class Board {
       case 40:
         this.head.currentDirection = 'down';
         break;
+      case 13:
+        switch (this.gameState) {
+          case GameState.PAUSE:
+            this.resume();
+            break;
+          case GameState.DEATH_SCREEN:
+            this.goToMenu();
+            break;
+          case GameState.MENU:
+            this.start();
+            break;
+          case GameState.INGAME:
+            this.pause();
+            break;
+          default:
+            break;
+        }
     }
+  }
+
+  getRandomPos() {
+    return {top: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random()),
+      left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())}
   }
 
   distance(topx,topy,leftx,lefty){
