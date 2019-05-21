@@ -17,24 +17,46 @@
 .gameBoard{
   border: 10px solid white;
   position: relative;
-  margin: auto;
+  margin: 10px auto;
   border-radius: 10px;
   background-color: greenyellow;
   background: rgba(255, 197, 174, 0.7);
   box-shadow: 5px 5px 5px 5px #007BFF;
 }
-
-#title{
+.text{
   font-family: 'Google Sans';
   font-weight: 800;
-  margin: auto auto;
-  color: rgb(55, 165, 55);
-  padding: 10px 40px;
-  margin: 10px;
-  font-size: 64px;
-  background: rgba(255, 197, 174, 0.3);
-  border-radius: 20px;
+  color: #007BFF;
+  font-size: 40px;
+  padding: 5px 20px;
+  background: linear-gradient(rgba(255, 197, 174, 0.3),rgb(228, 183, 167));
+  border-radius: 50px;
   display: inline-block;
+  margin: auto auto;
+  position: relative;
+}
+#title{
+  font-size: 80px;
+}
+
+#you-die{
+  background: radial-gradient(black,red);
+  color: white;
+  text-align: center;
+  padding: 320px 100px;
+  display: none;
+  position: absolute;
+  bottom: 0px;
+  left: 430px;
+  z-index: 1;
+}
+
+#start-screen{
+  margin: 200px 0;
+}
+
+.state-msgs{
+  font-size: 100px;
 }
 
 html, body{
@@ -54,9 +76,6 @@ html, body{
 }
 
 #score{
-  font-family: 'Google Sans';
-  font-weight: 800;
-  font-size: 40px;
   margin: 40px 40px;
   position: absolute;
 }

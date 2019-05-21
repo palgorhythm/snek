@@ -51,6 +51,7 @@ class Board {
 
   triggerDeath() {
     console.log('you Died :(')
+    $('#you-die').show();
     this.pause();
     this.setGameState(GameState.DEATH_SCREEN);
   }
@@ -61,11 +62,14 @@ class Board {
   }
 
   goToMenu() {
+    $('#you-die').hide();
+    $('#start-screen').show();
     this.boardElem.hide();
     this.setGameState(GameState.MENU);
   }
 
   start() {
+    $('#start-screen').hide();
     this.resetBoard();
     this.resume();
     this.boardElem.show();
@@ -73,7 +77,6 @@ class Board {
 
   setGameState(GameState) {
     this.gameState = GameState;
-    console.log(GameState);
   }
 
   resume() {
@@ -102,20 +105,16 @@ class Board {
 
   eatApple(tailPos, tailDir){
     const randRGB = [255*Math.random(), 255*Math.random(), 255*Math.random()];
-    console.log(`rgb(${randRGB[0]},${randRGB[1]}, ${randRGB[2]})`);
     this.snake.addBlock(tailPos, tailDir,`rgb(${randRGB[0]},${randRGB[1]},${randRGB[2]})`);
-    // console.log(this.snake.blocks);
     // create a random location that none of the snake blocks are at.
     let randLoc = this.getRandomPos();
     while (this.occupiedSquares[`${randLoc.top}|${randLoc.left}`]) {
-      console.log('needed a reset in apple spawn')
       randLoc = this.getRandomPos();
     }
     this.apple.respawn(randLoc);
   }
 
   checkKeyInput(e) {
-    // console.log(this.head);
     switch (e.keyCode) {
       case 39:
         this.head.currentDirection = 'right';
