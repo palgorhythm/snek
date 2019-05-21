@@ -3,7 +3,7 @@ class Board {
     this.head = new SnakeBlock();
     this.head.node.attr('id','head');
     this.snake = new Body(this.head);
-    this.apple = new Apple($('#board'));
+    this.apple = new Apple();
     $('#board').css({ height: `${settings.BOARD_SIZE}px`,
       width: `${settings.BOARD_SIZE}px`,
       border: "1px black solid",
