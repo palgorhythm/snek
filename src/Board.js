@@ -22,7 +22,7 @@ class Board {
     // set up the game loop to run by running a setTimeout that is also
     // called at the end of updateGameState. bind to this bc the E. context
     // of setTimeout is outside of the scope of the Board's this.
-    this.resume();
+    this.gameState = GameState.MENU;
     $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
@@ -65,14 +65,27 @@ class Board {
   triggerDeath() {
     console.log('you Died :(')
     this.pause();
+    this.gameState = GameState.DEATH_SCREEN;
   }
 
   pause() {
     clearInterval(this.gameLoop);
+    this.gameState = GameState.PAUSE;
+  }
+
+  goToMenu() {
+    console.log('in menu');
+    this.gameState = GameState.MENU;
+  }
+
+  start() {
+    this.resume();
+    this.gameState = GameState.INGAME;
   }
 
   resume() {
     this.gameLoop = setInterval(this.updateGameState.bind(this), settings.GAME_SPEED);
+    this.gameState = GameState.INGAME;
   }
 
   eatApple(tailPos, tailDir){
@@ -90,9 +103,6 @@ class Board {
 
   checkKeyInput(e) {
     // console.log(this.head);
-    if (e.keyCode === 37) {
-      this.head.currentDirection = 'left';
-    }
     switch (e.keyCode) {
       case 39:
         this.head.currentDirection = 'right';
@@ -106,6 +116,23 @@ class Board {
       case 40:
         this.head.currentDirection = 'down';
         break;
+      case 13:
+        switch (this.gameState) {
+          case GameState.PAUSE:
+            this.resume();
+            break;
+          case GameState.DEATH_SCREEN:
+            this.goToMenu();
+            break;
+          case GameState.MENU:
+            this.start();
+            break;
+          case GameState.INGAME:
+            this.pause();
+            break;
+          default:
+            break;
+        }
     }
   }
 
