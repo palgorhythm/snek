@@ -14,6 +14,7 @@ class Board {
         this.occupiedSquares[`${i}|${j}`] = false; 
       }
     }
+    this.occupiedSquares[`0|0`] = this.head;
     // console.log(this.occupiedSquares);
     setTimeout(this.updateGameState.bind(this), settings.GAME_SPEED);
     $('body').on('keydown', this.checkKeyInput.bind(this));
@@ -24,6 +25,7 @@ class Board {
     const tail = this.snake.blocks[this.snake.blocks.length - 1];
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
+    this.occupiedSquares[`${tailPos.top}|${tailPos.top}`] = false;
 
     // move   
     for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
@@ -33,9 +35,10 @@ class Board {
       curBlock.setDir(nextBlock.getDir());
     }
     this.head.move();
+    const headPos = this.head.getPosition();
+    this.occupiedSquares[`${headPos.top}|${headPos.top}`] = this.head;
 
     // if we're on top of the apple, we need to USE our cached tail pos
-    const headPos = this.head.getPosition();
     const applePos = this.apple.getPosition();
     if ( headPos.top === applePos.top && headPos.left === applePos.left){
       this.eatApple(tailPos, tailDir);
