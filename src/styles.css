@@ -1,7 +1,5 @@
 .snakeblock {
   background: black;
-  height: 50px;
-  width: 50px;
   background-color: #007BFF;
   position: absolute;
   z-index: 1;

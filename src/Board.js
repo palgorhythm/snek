@@ -49,7 +49,8 @@ class Board {
 
     // if we're on top of the apple, we need to USE our cached tail pos
     const applePos = this.apple.getPosition();
-    if ( headPos.top === applePos.top && headPos.left === applePos.left){
+    
+    if (Math.abs(headPos.top - applePos.top) < 50 && Math.abs(headPos.left-applePos.left) < 50){
       this.eatApple(tailPos, tailDir);
     } 
     // then, we place the new tail.
@@ -60,7 +61,9 @@ class Board {
     console.log(tailPos);
     this.snake.addBlock(tailPos, tailDir);
     // console.log(this.snake.blocks);
-    // this.apple.respawn();
+    // create a random location that none of the snake blocks are at.
+    let randLoc = {top: Math.floor((settings.BOARD_SIZE-settings.BLOCK_SIZE)*Math.random()), left: Math.floor((settings.BOARD_SIZE-settings.BLOCK_SIZE)*Math.random())};
+    this.apple.respawn(randLoc);
   }
 
   checkKeyInput(e) {
@@ -82,5 +85,11 @@ class Board {
         this.head.currentDirection = 'down';
         break;
     }
+  }
+
+  distance(topx,topy,leftx,lefty){
+    var dx = topx-leftx;
+    var dy = topy-lefty;
+    return Math.sqrt(dx*dx + dy*dy);
   }
 }
