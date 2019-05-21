@@ -6,6 +6,7 @@ class Board {
     this.apple = new Apple($('#board'));
     this.gameSpeed = 100;
     setTimeout(this.updateGameState.bind(this), this.gameSpeed);
+    $('body').on('keydown', this.checkKeyInput.bind(this));
   }
 
   updateGameState(){
@@ -35,6 +36,7 @@ class Board {
   }
 
   checkKeyInput(e) {
+    console.log(this.head);
     if (e.keyCode === 37) {
       console.log('pressed left');
       this.head.currentDirection = 'left';
