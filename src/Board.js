@@ -129,21 +129,28 @@ class Board {
         break;
       case 13:
         switch (this.gameState) {
-          case GameState.PAUSE:
-            this.resume();
-            break;
           case GameState.DEATH_SCREEN:
             this.goToMenu();
             break;
           case GameState.MENU:
             this.start();
             break;
+          default:
+            break;
+        }
+        break;
+      case 80:
+        switch (this.gameState) {
           case GameState.INGAME:
             this.pause();
+            break;
+          case GameState.PAUSE:
+            this.resume();
             break;
           default:
             break;
         }
+        break;
     }
   }
 
