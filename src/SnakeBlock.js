@@ -8,11 +8,14 @@ class SnakeBlock {
    * @param {{top, left}} pos 
    * @param {string} dir 
    */
-  constructor(pos = { top: 0, left: 0 }, dir = 'right') {
+  constructor(pos = { top: 0, left: 0 }, dir = 'right', myColor = 'transparent') {
     this.node = $('<div></div>');
     this.currentDirection = dir;
     $('#board').append(this.node); // where we add the head to
     this.node.css(pos);
+    this.myColor = myColor;
+    console.log(myColor);
+    this.node.css('background-color', this.myColor);
     this.node.addClass('snakeblock');
     this.node.css({height: settings.BLOCK_SIZE, width: settings.BLOCK_SIZE});
   }

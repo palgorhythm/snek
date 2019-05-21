@@ -85,6 +85,7 @@ class Board {
     this.boardElem.empty();
     this.head = new SnakeBlock();
     this.head.node.attr('id','head');
+    this.head.node.append('<img id="will" src=src/assets/will.png \>');
     this.snake = new Body(this.head);
     this.apple = new Apple();
 
@@ -100,8 +101,9 @@ class Board {
   };
 
   eatApple(tailPos, tailDir){
-    console.log(tailPos);
-    this.snake.addBlock(tailPos, tailDir);
+    const randRGB = [255*Math.random(), 255*Math.random(), 255*Math.random()];
+    console.log(`rgb(${randRGB[0]},${randRGB[1]}, ${randRGB[2]})`);
+    this.snake.addBlock(tailPos, tailDir,`rgb(${randRGB[0]},${randRGB[1]},${randRGB[2]})`);
     // console.log(this.snake.blocks);
     // create a random location that none of the snake blocks are at.
     let randLoc = this.getRandomPos();
