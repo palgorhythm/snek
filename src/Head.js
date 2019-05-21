@@ -1,19 +1,27 @@
 // creates a constructor function - research ES6 classes
-class Head {
+class SnakeBlock {
 
   // this is what's called when you use the "new" keyword
-  constructor($el) {
-    this.node = $('<div id="head"></div>');
-    this.currentDirection = 'right';
+  /**
+   * 
+   * @param {$} $el  
+   * @param {{top, left}} pos 
+   * @param {string} dir 
+   */
+  constructor(pos = { top: 0, left: 0 }, dir = 'right') {
+    this.node = $('<div></div>');
+    this.currentDirection = dir;
     this.stepSize = 50;
-    $el.append(this.node); // where we add the head to
-    this.node.css({ top: 0, left: 0 });
-    // setTimeout(this.move.bind(this), this.SPEED);
+    $('#board').append(this.node); // where we add the head to
+    this.node.css(pos);
+    this.node.addClass('snakeblock');
   }
 
   getPosition() {
-    const {top, left} = this.node.position();
-    return [top, left];
+    return this.node.position();
+  }
+  getDir(){
+    return this.currentDirection;
   }
 
   // same as Head.prototype.move = function() {...}

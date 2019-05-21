@@ -1,10 +1,14 @@
-#head {
+.snakeblock {
   background: black;
   height: 50px;
   width: 50px;
   background-color: green;
   position: absolute;
   z-index: 1;
+}
+
+#head{
+  background-color: red;
 }
 
 #board {
