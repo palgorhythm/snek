@@ -131,15 +131,19 @@ class Board {
     // console.log(this.head);
     switch (e.keyCode) {
       case 39:
+        if (this.head.currentDirection === 'left') return;
         this.head.currentDirection = 'right';
         break;
       case 37:
+          if (this.head.currentDirection === 'right') return;
         this.head.currentDirection = 'left';
         break;
       case 38:
+          if (this.head.currentDirection === 'down') return;
         this.head.currentDirection = 'up';
         break;
       case 40:
+          if (this.head.currentDirection === 'up') return;
         this.head.currentDirection = 'down';
         break;
       case 13:
