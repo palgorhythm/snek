@@ -15,7 +15,8 @@ class Board {
     const tailPos = tail.getPosition();
 
     // move
-    this.head.move();
+    this.snake.blocks.forEach(block => {block.move()});
+
 
     // if we're on top of the apple, we need to USE our cached tail pos
     const headPos = this.head.getPosition();
