@@ -13,10 +13,22 @@
   <script src="./src/main.js"></script>
 </head>
 <body>
-  <div><div class ="text" id="title"> <span style="color: #007BFF;">S </style><span style="color: rgb(38, 170, 38);">N </style><span style="color: orangered;">E </style><span style="color: yellow;">K </style></div><span class ="text" id="score">score: 0</span></div>
+  <audio id="sneksong">
+      <source name="snek" src="/src/assets/snek.mp3" loop="true" hidden="true" autostart="0" type="audio/mpeg">
+  </audio>
+  <audio id="sandstorm">
+      <source name="sandstorm" src="/src/assets/sandstorm.mp3" loop="true" hidden="true" autostart="0" type="audio/mpeg">
+  </audio>
+  <audio id="snekDubstep">
+      <source name="sandstorm" src="/src/assets/snekDubstep.mp3" loop="true" hidden="true" autostart="0" type="audio/mpeg">
+  </audio> 
+  <audio id="sadSong">
+      <source name="sandstorm" src="/src/assets/sadSong.mp3" loop="true" hidden="true" autostart="0" type="audio/mpeg">
+  </audio> 
+  <div><div class ="text" id="title"> <span style="color: #007BFF;">s </style><span style="color: rgb(38, 170, 38);">n </style><span style="color: orangered;">e </style><span style="color: yellow;">k </style></div><span class ="text" id="score">score: 0</span></div>
   <div id="board"></div>
-  <div class ="text state-msgs" id="start-screen">PRESS ENTER TO START</div><br/>
+  <div class ="text state-msgs" id="start-screen">PRESS ENTER 2 START</div><br/>
   <div class ="text state-msgs" id="you-die" style="color: rgb(187, 25, 25)">U AM DETH'D</div>
 </body>
-<link rel="stylesheet" href="src/styles.css">
+  <link rel="stylesheet" href="src/styles.css">
 </html>

@@ -7,7 +7,8 @@ class Board {
       width: `${settings.BOARD_SIZE}px`})
     $('body').on('keydown', this.checkKeyInput.bind(this));
     this.setGameState(GameState.MENU);
-    
+    document.getElementById("sneksong").play(); 
+    document.getElementById("sandstorm").play(); 
     // set up the game loop to run by running a setTimeout that is also
     // called at the end of updateGameState. bind to this bc the E. context
     // of setTimeout is outside of the scope of the Board's this.
@@ -21,7 +22,7 @@ class Board {
     const tail = this.snake.blocks[this.snake.blocks.length - 1];
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
-
+    this.planNextMove(this.head.getPosition(), this.apple.getPosition());
     // move   
     for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
       const curBlock = this.snake.blocks[i];
@@ -50,18 +51,28 @@ class Board {
   }
 
   triggerDeath() {
-    console.log('you Died :(')
+    document.getElementById("snekDubstep").pause(); 
+    document.getElementById("sadSong").play(); 
     $('#you-die').show();
     this.pause();
     this.setGameState(GameState.DEATH_SCREEN);
   }
 
   pause() {
+    document.getElementById("snekDubstep").pause(); 
     clearInterval(this.gameLoop);
     this.setGameState(GameState.PAUSE);
   }
 
   goToMenu() {
+    document.getElementById("sneksong").currentTime = 0; 
+    document.getElementById("sandstorm").currentTime = 0; 
+    document.getElementById("sneksong").play(); 
+    document.getElementById("sandstorm").play(); 
+    document.getElementById("snekDubstep").pause(); 
+    document.getElementById("snekDubstep").currentTime = 0; 
+    document.getElementById("sadSong").pause(); 
+    document.getElementById("sadSong").currentTime = 0;
     $('#you-die').hide();
     $('#start-screen').show();
     this.boardElem.hide();
@@ -69,6 +80,9 @@ class Board {
   }
 
   start() {
+    document.getElementById("sneksong").pause(); 
+    document.getElementById("sandstorm").pause(); 
+    document.getElementById("snekDubstep").play(); 
     $('#start-screen').hide();
     this.resetBoard();
     this.resume();
@@ -80,6 +94,7 @@ class Board {
   }
 
   resume() {
+    document.getElementById("snekDubstep").play(); 
     this.gameLoop = setInterval(this.updateGameState.bind(this), settings.GAME_SPEED);
     this.setGameState(GameState.INGAME);
   }
@@ -91,7 +106,7 @@ class Board {
     this.head.node.append('<img id="will" src=src/assets/will.png \>');
     this.snake = new Body(this.head);
     this.apple = new Apple();
-
+    this.score = 0;
     // build the board of falses for unoccupied spots and 
     // objs for each thing that occupies a spot
     this.occupiedSquares = {}; 
@@ -106,6 +121,8 @@ class Board {
   eatApple(tailPos, tailDir){
     const randRGB = [255*Math.random(), 255*Math.random(), 255*Math.random()];
     this.snake.addBlock(tailPos, tailDir,`rgb(${randRGB[0]},${randRGB[1]},${randRGB[2]})`);
+    this.score += 1;
+    $('#score').html(`score: ${this.score}`);
     // create a random location that none of the snake blocks are at.
     let randLoc = this.getRandomPos();
     while (this.occupiedSquares[`${randLoc.top}|${randLoc.left}`]) {
@@ -185,9 +202,33 @@ class Board {
       left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())}
   }
 
-  distance(topx,topy,leftx,lefty){
-    var dx = topx-leftx;
-    var dy = topy-lefty;
-    return Math.sqrt(dx*dx + dy*dy);
+  planNextMove(curPos, applePos){
+    // diff possible position
+    const rightMovePos = [{top: curPos.top, left: curPos.left + settings.BLOCK_SIZE},'right'];
+    const leftMovePos = [{top: curPos.top, left: curPos.left - settings.BLOCK_SIZE},'left'];
+    const upMovePos = [{top: curPos.top + settings.BLOCK_SIZE, left: curPos.left},'up'];
+    const downMovePos = [{top: curPos.top - settings.BLOCK_SIZE, left: curPos.left},'down'];
+    const possMoves = [rightMovePos, leftMovePos, upMovePos, downMovePos];
+    // find valid moves NEED TO CHECK BEFORE MOVE!!
+    const validMoves = possMoves.filter(move => this.occupiedSquares[`${move[0].top}|${move[0].left}`] != false);
+    let theMoveDir;
+    let minDist = Infinity;
+    let curDist;
+    console.log('valid moves: ',validMoves);
+    for (let i = 0; i < validMoves.length; i += 1) {
+      curDist = this.distance(validMoves[i][0].top,validMoves[i][0].left,applePos.top,applePos.left);
+      console.log(validMoves[i][1], curDist);
+      if(curDist <= minDist) {
+        theMoveDir = validMoves[i][1];
+        minDist = curDist;
+      }
+    }
+    console.log(theMoveDir);
+    this.head.setDir(theMoveDir);
+  }
+  distance(x1,y1,x2,y2){
+    const a = x1 - x2;
+    const b = y1 - y2;
+    return Math.sqrt( a*a + b*b );
   }
 }

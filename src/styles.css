@@ -6,7 +6,6 @@
   position: absolute;
   z-index: 1;
   border-radius: 50%;
-  box-shadow: 10px;
 }
 
 #will{
@@ -15,13 +14,13 @@
 }
 
 .gameBoard{
-  border: 10px solid white;
+  border: 10px solid #b1a4dd;
   position: relative;
   margin: 10px auto;
   border-radius: 10px;
   background-color: greenyellow;
   background: rgba(255, 197, 174, 0.7);
-  box-shadow: 5px 5px 5px 5px #007BFF;
+  box-shadow: 5px 5px 5px 5px rgba(14, 112, 216, 0.5);
 }
 .text{
   font-family: 'Google Sans';
@@ -37,6 +36,7 @@
 }
 #title{
   font-size: 80px;
+  background: none;
 }
 
 #you-die{
@@ -47,7 +47,7 @@
   display: none;
   position: absolute;
   bottom: 0px;
-  left: 430px;
+  left: 420px;
   z-index: 1;
 }
 
@@ -60,7 +60,7 @@
 }
 
 html, body{
-  background: radial-gradient(#8dffc2,#a88dff);
+  background: radial-gradient(#8dffc2,#8f78db);
   text-align: center;
 }
 
