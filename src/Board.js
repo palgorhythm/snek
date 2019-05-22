@@ -208,11 +208,12 @@ class Board {
       left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())}
   }
 
-  planNextMove(curPos, applePos, n = 10){
+  planNextMove(curPos, applePos){
     const rightMovePos = [{top: curPos.top, left: this.mod((curPos.left + settings.BLOCK_SIZE), settings.BOARD_SIZE)},'right'];
     const leftMovePos = [{top: curPos.top, left: this.mod((curPos.left - settings.BLOCK_SIZE), settings.BOARD_SIZE)},'left'];
     const upMovePos = [{top: this.mod((curPos.top - settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'up'];
     const downMovePos = [{top: this.mod((curPos.top + settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'down'];
+    
     const possMoves = [rightMovePos, leftMovePos, upMovePos, downMovePos];
     // find valid moves NEED TO CHECK BEFORE MOVE!!
     const validMoves = possMoves.filter(move => {
