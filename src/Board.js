@@ -22,7 +22,6 @@ class Board {
     const tail = this.snake.blocks[this.snake.blocks.length - 1];
     const tailDir = tail.getDir();
     const tailPos = tail.getPosition();
-    this.planNextMove(this.head.getPosition(), this.apple.getPosition());
     // move   
     for (let i = this.snake.blocks.length - 1; i > 0; i -= 1) {
       const curBlock = this.snake.blocks[i];
@@ -39,7 +38,7 @@ class Board {
       this.triggerDeath();
     }
     this.occupiedSquares[`${headPos.top}|${headPos.left}`] = this.head;
-
+    this.planNextMove(this.head.getPosition(), this.apple.getPosition());
     // if we're on top of the apple, we need to USE our cached tail pos
     const applePos = this.apple.getPosition();
     
@@ -204,20 +203,23 @@ class Board {
 
   planNextMove(curPos, applePos){
     // diff possible position
-    const rightMovePos = [{top: curPos.top, left: curPos.left + settings.BLOCK_SIZE},'right'];
-    const leftMovePos = [{top: curPos.top, left: curPos.left - settings.BLOCK_SIZE},'left'];
-    const upMovePos = [{top: curPos.top + settings.BLOCK_SIZE, left: curPos.left},'up'];
-    const downMovePos = [{top: curPos.top - settings.BLOCK_SIZE, left: curPos.left},'down'];
+    const rightMovePos = [{top: curPos.top, left: this.mod((curPos.left + settings.BLOCK_SIZE), settings.BOARD_SIZE)},'right'];
+    const leftMovePos = [{top: curPos.top, left: this.mod((curPos.left - settings.BLOCK_SIZE), settings.BOARD_SIZE)},'left'];
+    const upMovePos = [{top: this.mod((curPos.top - settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'up'];
+    const downMovePos = [{top: this.mod((curPos.top + settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'down'];
     const possMoves = [rightMovePos, leftMovePos, upMovePos, downMovePos];
     // find valid moves NEED TO CHECK BEFORE MOVE!!
-    const validMoves = possMoves.filter(move => this.occupiedSquares[`${move[0].top}|${move[0].left}`] != false);
+    const validMoves = possMoves.filter(move => {
+      // console.log(`${move[0].top}|${move[0].left}`, this.occupiedSquares[`${move[0].top}|${move[0].left}`])
+      return !this.occupiedSquares[`${move[0].top}|${move[0].left}`];
+    });
     let theMoveDir;
     let minDist = Infinity;
     let curDist;
-    console.log('valid moves: ',validMoves);
+    // console.log('valid moves: ',validMoves);
     for (let i = 0; i < validMoves.length; i += 1) {
-      curDist = this.distance(validMoves[i][0].top,validMoves[i][0].left,applePos.top,applePos.left);
-      console.log(validMoves[i][1], curDist);
+      curDist = this.distance(applePos.top,applePos.left, validMoves[i][0].top,validMoves[i][0].left);
+      console.log(validMoves[i][0].top,validMoves[i][0].left,applePos.top,applePos.left);
       if(curDist <= minDist) {
         theMoveDir = validMoves[i][1];
         minDist = curDist;
@@ -226,6 +228,10 @@ class Board {
     console.log(theMoveDir);
     this.head.setDir(theMoveDir);
   }
+
+  mod(x, n) {
+    return ((x%n)+n)%n;  
+  };
   distance(x1,y1,x2,y2){
     const a = x1 - x2;
     const b = y1 - y2;
