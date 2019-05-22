@@ -209,11 +209,6 @@ class Board {
   }
 
   planNextMove(curPos, applePos, n = 10){
-    // diff possible position
-
-    // if (n = 10) {
-
-    // }
     const rightMovePos = [{top: curPos.top, left: this.mod((curPos.left + settings.BLOCK_SIZE), settings.BOARD_SIZE)},'right'];
     const leftMovePos = [{top: curPos.top, left: this.mod((curPos.left - settings.BLOCK_SIZE), settings.BOARD_SIZE)},'left'];
     const upMovePos = [{top: this.mod((curPos.top - settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'up'];
@@ -226,7 +221,6 @@ class Board {
     let theMoveDir;
     let minDist = Infinity;
     let curDist;
-    // console.log('valid moves: ',validMoves);
     for (let i = 0; i < validMoves.length; i += 1) {
       curDist = this.distance(applePos.top,applePos.left, validMoves[i][0].top,validMoves[i][0].left);
       if(curDist <= minDist) {
