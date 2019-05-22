@@ -38,7 +38,11 @@ class Board {
       this.triggerDeath();
     }
     this.occupiedSquares[`${headPos.top}|${headPos.left}`] = this.head;
-    this.planNextMove(this.head.getPosition(), this.apple.getPosition());
+    // console.log(settings.AI);
+    if(settings.AI){
+      // console.log(settings.AI);
+      this.planNextMove(this.head.getPosition(), this.apple.getPosition());
+    }
     // if we're on top of the apple, we need to USE our cached tail pos
     const applePos = this.apple.getPosition();
     
@@ -163,6 +167,9 @@ class Board {
           if (this.head.currentDirection === 'up') return;
         this.head.currentDirection = 'down';
         break;
+      case 65:
+        settings.AI = !settings.AI;
+        break;
       case 13:
         switch (this.gameState) {
           case GameState.DEATH_SCREEN:
@@ -201,8 +208,12 @@ class Board {
       left: settings.BLOCK_SIZE*Math.floor((settings.BOARD_SIZE/settings.BLOCK_SIZE - 1)*Math.random())}
   }
 
-  planNextMove(curPos, applePos){
+  planNextMove(curPos, applePos, n = 10){
     // diff possible position
+
+    // if (n = 10) {
+
+    // }
     const rightMovePos = [{top: curPos.top, left: this.mod((curPos.left + settings.BLOCK_SIZE), settings.BOARD_SIZE)},'right'];
     const leftMovePos = [{top: curPos.top, left: this.mod((curPos.left - settings.BLOCK_SIZE), settings.BOARD_SIZE)},'left'];
     const upMovePos = [{top: this.mod((curPos.top - settings.BLOCK_SIZE), settings.BOARD_SIZE), left: curPos.left},'up'];
@@ -210,7 +221,6 @@ class Board {
     const possMoves = [rightMovePos, leftMovePos, upMovePos, downMovePos];
     // find valid moves NEED TO CHECK BEFORE MOVE!!
     const validMoves = possMoves.filter(move => {
-      // console.log(`${move[0].top}|${move[0].left}`, this.occupiedSquares[`${move[0].top}|${move[0].left}`])
       return !this.occupiedSquares[`${move[0].top}|${move[0].left}`];
     });
     let theMoveDir;
@@ -219,13 +229,12 @@ class Board {
     // console.log('valid moves: ',validMoves);
     for (let i = 0; i < validMoves.length; i += 1) {
       curDist = this.distance(applePos.top,applePos.left, validMoves[i][0].top,validMoves[i][0].left);
-      console.log(validMoves[i][0].top,validMoves[i][0].left,applePos.top,applePos.left);
       if(curDist <= minDist) {
         theMoveDir = validMoves[i][1];
         minDist = curDist;
       }
     }
-    console.log(theMoveDir);
+
     this.head.setDir(theMoveDir);
   }
 
