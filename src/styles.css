@@ -43,11 +43,18 @@
   background: radial-gradient(black,red);
   color: white;
   text-align: center;
-  padding: 320px 100px;
+  padding: 500px 200px;
   display: none;
   position: absolute;
+/*   width: 1000px;
+  height: 1000px; */
+  margin: auto;
   bottom: 0px;
-  left: 420px;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+/*   left: 420px; */
   z-index: 1;
 }
 
