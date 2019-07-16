@@ -58,7 +58,7 @@ class SnakeBlock {
       position.top = 0;
     }
 
-    this.node.css(position);
+    this.node.css({top: Math.ceil(position.top), left: Math.ceil(position.left)});
   }
 
 }

@@ -3,13 +3,13 @@
   <meta charset="UTF-8">
   <title>Snake</title>
   
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-  <script src='src/LinkedList.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+  <script src="src/LinkedList.js"></script>
   <script src="src/GameState.js"></script>
-  <script src='src/SnakeBlock.js'></script>
-  <script src='src/Body.js'></script>
-  <script src='src/Apple.js'></script>
-  <script src='src/Board.js'></script>
+  <script src="src/SnakeBlock.js"></script>
+  <script src="src/Body.js"></script>
+  <script src="src/Apple.js"></script>
+  <script src="src/Board.js"></script>
   <script src="./src/main.js"></script>
 </head>
 <body>
@@ -25,10 +25,12 @@
   <audio id="sadSong">
       <source name="sandstorm" src="/src/assets/sadSong.mp3" loop="true" hidden="true" autostart="0" type="audio/mpeg">
   </audio> 
-  <div><div class ="text" id="title"> <span style="color: #007BFF;">s </style><span style="color: rgb(38, 170, 38);">n </style><span style="color: orangered;">e </style><span style="color: yellow;">k </style></div><span class ="text" id="score">score: 0</span></div>
+  <div><div class ="text" id="title"> <span style="color: #007BFF;">s </span><span style="color: rgb(38, 170, 38);">n </span><span style="color: orangered;">e </span><span style="color: yellow;">k </span></div><span class ="text" id="score">score: 0</span></div>
   <div id="board"></div>
   <div class ="text state-msgs" id="start-screen">PRESS ENTER 2 START</div><br/>
-  <div class ="text state-msgs" id="you-die" style="color: rgb(187, 25, 25)">U AM DETH'D</div>
+  <div class ="text" id="ai-text"> <span style="color: orangered;">press a to toggle AI mode :> </span></div>
+  <div class ="text" id="mobile-text"> <span style="color: purple; margin: 20px;">touch to start on mobile <3</span></div>
+  <div class ="text state-msgs" id="you-die" style="color: rgb(187, 25, 25);">U AM DETH'D</div>
 </body>
   <link rel="stylesheet" href="src/styles.css">
 </html>
